@@ -2,6 +2,12 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { Star, Quote } from "lucide-react";
+import partnerFrancophonie from "@/assets/partner-francophonie.png";
+import partnerGoogleNews from "@/assets/partner-google-news.png";
+import partnerJournalismAi from "@/assets/partner-journalism-ai.png";
+import partnerSetanal from "@/assets/partner-setanal.png";
+import partnerLse from "@/assets/partner-lse.png";
+import partnerTamaMedia from "@/assets/partner-tama-media.png";
 
 const testimonials = [
   {
@@ -28,12 +34,12 @@ const testimonials = [
 ];
 
 const partners = [
-  "UNESCO",
-  "France 24",
-  "RFI",
-  "Africa Check",
-  "CFI Médias",
-  "Internews",
+  { name: "Organisation Internationale de la Francophonie", logo: partnerFrancophonie },
+  { name: "Google News Initiative", logo: partnerGoogleNews },
+  { name: "JournalismAi", logo: partnerJournalismAi },
+  { name: "Sètanal Media", logo: partnerSetanal },
+  { name: "Tama Media", logo: partnerTamaMedia },
+  { name: "The London School of Economics and Political Science", logo: partnerLse },
 ];
 
 const TestimonialsSection = () => {
@@ -131,16 +137,18 @@ const TestimonialsSection = () => {
           <div className="flex flex-wrap items-center justify-center gap-8 lg:gap-12">
             {partners.map((partner, index) => (
               <motion.div
-                key={partner}
+                key={partner.name}
                 initial={{ opacity: 0 }}
                 animate={isInView ? { opacity: 1 } : {}}
                 transition={{ delay: 0.5 + index * 0.1 }}
-                whileHover={{ scale: 1.1 }}
-                className="px-6 py-3 glass-card rounded-xl"
+                whileHover={{ scale: 1.05, y: -4 }}
+                className="group"
               >
-                <span className="font-display font-semibold text-muted-foreground hover:text-foreground transition-colors">
-                  {partner}
-                </span>
+                <img
+                  src={partner.logo}
+                  alt={partner.name}
+                  className="h-12 md:h-14 lg:h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+                />
               </motion.div>
             ))}
           </div>

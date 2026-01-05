@@ -120,11 +120,15 @@ const HeroSection = () => {
               whileHover={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              <img
-                src={phoneMockup1}
-                alt="Akili App"
-                className="w-64 md:w-80 lg:w-96 drop-shadow-2xl"
-              />
+              <div className="relative">
+                <img
+                  src={phoneMockup1}
+                  alt="Akili App"
+                  className="w-64 md:w-80 lg:w-96 drop-shadow-[0_20px_60px_rgba(0,0,0,0.3)] rounded-[2.5rem]"
+                />
+                {/* Reflection effect */}
+                <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-transparent to-transparent rounded-[2.5rem] pointer-events-none" />
+              </div>
 
               {/* Floating badges */}
               <motion.div

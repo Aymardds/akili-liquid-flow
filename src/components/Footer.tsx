@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import { Twitter, Facebook, Instagram, Linkedin, Mail, MapPin } from "lucide-react";
+import { Facebook, Instagram, Mail, MapPin, MessageCircle } from "lucide-react";
+import { Link } from "react-router-dom";
 import akiliLogo from "@/assets/akili-logo.png";
 
 const Footer = () => {
@@ -7,27 +8,27 @@ const Footer = () => {
 
   const links = {
     product: [
-      { label: "Fonctionnalités", href: "#features" },
-      { label: "L'application", href: "#screenshots" },
-      { label: "Témoignages", href: "#testimonials" },
+      { label: "À propos de Akili", href: "/a-propos" },
+      { label: "Nos sources", href: "/nos-sources" },
+      { label: "Blog", href: "/blog" },
+      { label: "Contact", href: "/contact" },
     ],
     resources: [
-      { label: "Blog", href: "#" },
+      { label: "Blog", href: "/blog" },
       { label: "FAQ", href: "#" },
       { label: "Aide", href: "#" },
     ],
     legal: [
-      { label: "Confidentialité", href: "#" },
-      { label: "Conditions", href: "#" },
+      { label: "CGU", href: "https://akilicheck.com/conditions-generales-dutilisation-de-lapplication-akili/" },
+      { label: "Confidentialité", href: "https://akilicheck.com/conditions-generales-dutilisation-de-lapplication-akili/" },
       { label: "Cookies", href: "#" },
     ],
   };
 
   const socials = [
-    { icon: Twitter, href: "#", label: "Twitter" },
-    { icon: Facebook, href: "#", label: "Facebook" },
-    { icon: Instagram, href: "#", label: "Instagram" },
-    { icon: Linkedin, href: "#", label: "LinkedIn" },
+    { icon: Facebook, href: "https://www.facebook.com/profile.php?id=61576184382062", label: "Facebook" },
+    { icon: Instagram, href: "https://www.instagram.com/akilicheck?igsh=M2V0OXZ3eTFmaDcw", label: "Instagram" },
+    { icon: MessageCircle, href: "https://tinyurl.com/43rjerde", label: "WhatsApp" },
   ];
 
   return (
@@ -55,6 +56,8 @@ const Footer = () => {
                 <motion.a
                   key={social.label}
                   href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label={social.label}
                   whileHover={{ scale: 1.2, y: -2 }}
                   className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors"
@@ -73,12 +76,12 @@ const Footer = () => {
             <ul className="space-y-3">
               {links.product.map((link) => (
                 <li key={link.label}>
-                  <a
-                    href={link.href}
+                  <Link
+                    to={link.href}
                     className="text-muted-foreground hover:text-foreground transition-colors"
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -92,12 +95,21 @@ const Footer = () => {
             <ul className="space-y-3">
               {links.resources.map((link) => (
                 <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    {link.label}
-                  </a>
+                  {link.href.startsWith('/') ? (
+                    <Link
+                      to={link.href}
+                      className="text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  ) : (
+                    <a
+                      href={link.href}
+                      className="text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      {link.label}
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>
@@ -113,6 +125,8 @@ const Footer = () => {
                 <li key={link.label}>
                   <a
                     href={link.href}
+                    target={link.href.startsWith('http') ? '_blank' : undefined}
+                    rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                     className="text-muted-foreground hover:text-foreground transition-colors"
                   >
                     {link.label}

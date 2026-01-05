@@ -69,7 +69,7 @@ const CTASection = () => {
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
             <Button
-              variant="hero"
+              variant="cta"
               size="xl"
               className="w-full sm:w-auto"
             >
