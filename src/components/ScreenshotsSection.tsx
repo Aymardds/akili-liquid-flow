@@ -44,11 +44,11 @@ const ScreenshotsSection = () => {
       id="screenshots"
       className="py-24 lg:py-32 relative overflow-hidden"
     >
-      {/* Background */}
-      <div className="absolute inset-0 hero-gradient" />
+      {/* Background - subtle */}
+      <div className="absolute inset-0 bg-background" />
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-72 h-72 bg-primary/10 rounded-full blur-3xl animate-blob" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gold/10 rounded-full blur-3xl animate-blob-delayed" />
+        <div className="absolute top-0 left-1/4 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gold/5 rounded-full blur-3xl" />
       </div>
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10" ref={ref}>
