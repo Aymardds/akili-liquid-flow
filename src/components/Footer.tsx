@@ -151,9 +151,14 @@ const Footer = () => {
               Abidjan, Côte d'Ivoire
             </span>
           </div>
-          <p className="text-sm text-muted-foreground">
-            © {currentYear} Akili. Tous droits réservés.
-          </p>
+          <div className="flex flex-col md:items-end gap-1">
+            <p className="text-sm text-muted-foreground">
+              © {currentYear} Akili. Tous droits réservés.
+            </p>
+            <p className="text-xs text-muted-foreground">
+              Développée avec le ❤️ par <a href="https://www.inexiumus.com" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">INEXIUMUS</a>
+            </p>
+          </div>
         </div>
       </div>
     </footer>
