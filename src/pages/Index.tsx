@@ -2,6 +2,7 @@ import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import FeaturesSection from "@/components/FeaturesSection";
+import AvailabilitySection from "@/components/AvailabilitySection";
 import ScreenshotsSection from "@/components/ScreenshotsSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import CTASection from "@/components/CTASection";
@@ -11,7 +12,7 @@ const Index = () => {
   return (
     <>
       <Helmet>
-        <title>Akili — Là où le doute disparaît | Vérification des infos</title>
+        <title>Akili | Vérifie avant de partager</title>
         <meta
           name="description"
           content="Akili est la première application mobile dédiée à la lutte contre les infox en Afrique francophone. Vérifiez l'information en un seul clic."
@@ -35,6 +36,7 @@ const Index = () => {
         <main>
           <HeroSection />
           <FeaturesSection />
+          <AvailabilitySection />
           <ScreenshotsSection />
           <TestimonialsSection />
           <CTASection />

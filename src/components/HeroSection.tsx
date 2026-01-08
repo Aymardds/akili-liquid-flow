@@ -41,9 +41,9 @@ const HeroSection = () => {
               transition={{ delay: 0.3, duration: 0.8 }}
               className="font-display text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-foreground leading-tight mb-6"
             >
-              Là où le doute{" "}
+              Vérifie avant de{" "}
               <span className="relative">
-                <span className="gradient-text">disparaît</span>
+                <span className="gradient-text">partager</span>
                 <motion.span
                   className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-primary to-primary/50 rounded-full"
                   initial={{ scaleX: 0 }}
@@ -59,8 +59,9 @@ const HeroSection = () => {
               transition={{ delay: 0.5, duration: 0.8 }}
               className="text-lg md:text-xl text-muted-foreground mb-8 max-w-xl mx-auto lg:mx-0"
             >
-              La première application mobile dédiée à la lutte contre les infox
-              en Afrique francophone. Vérifiez l'information en un seul clic.
+              Avant de relayer une information, Akili vous aide
+              à vérifier ce qui est vrai, trompeur ou faux, en un seul clic.
+              La première application de lutte contre la désinformation en Afrique francophone.
             </motion.p>
 
             <motion.div

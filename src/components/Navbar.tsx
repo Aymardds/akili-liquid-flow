@@ -9,6 +9,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const navLinks = [
+    { href: "/", label: "Accueil" },
     { href: "/a-propos", label: "À propos de Akili" },
     { href: "/nos-sources", label: "Nos sources" },
     { href: "/blog", label: "Blog" },
@@ -25,7 +26,7 @@ const Navbar = () => {
       <div className="container mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
-          <a href="#" className="flex items-center gap-2 group">
+          <Link to="/" className="flex items-center gap-2 group">
             <motion.img
               src={akiliLogo}
               alt="Akili"
@@ -36,7 +37,7 @@ const Navbar = () => {
             <span className="font-display text-xl lg:text-2xl font-bold text-foreground">
               Akili
             </span>
-          </a>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">

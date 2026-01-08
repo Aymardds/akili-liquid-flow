@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
-import { Shield, Zap, Users, MessageCircle, Search } from "lucide-react";
+import { Shield, Zap, Users, MessageCircle, Search, Globe } from "lucide-react";
 
 const features = [
   {
@@ -33,6 +33,12 @@ const features = [
     title: "Alertes en temps réel",
     description:
       "Recevez des notifications sur les fake news qui circulent dans votre région.",
+  },
+  {
+    icon: Globe,
+    title: "Support Multilingue",
+    description:
+      "Disponible en français, anglais et en langues locales comme le Bambara pour plus d'accessibilité.",
   },
 ];
 

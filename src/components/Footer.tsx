@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Facebook, Instagram, Mail, MapPin, MessageCircle } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import akiliLogo from "@/assets/akili-logo.png";
 
@@ -28,7 +29,8 @@ const Footer = () => {
   const socials = [
     { icon: Facebook, href: "https://www.facebook.com/profile.php?id=61576184382062", label: "Facebook" },
     { icon: Instagram, href: "https://www.instagram.com/akilicheck?igsh=M2V0OXZ3eTFmaDcw", label: "Instagram" },
-    { icon: MessageCircle, href: "https://tinyurl.com/43rjerde", label: "WhatsApp" },
+    { icon: FaWhatsapp, href: "https://wa.me/2250173820625", label: "WhatsApp" },
+    { icon: MessageCircle, href: "https://www.facebook.com/messages/t/643172972215391", label: "Messenger" },
   ];
 
   return (

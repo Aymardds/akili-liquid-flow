@@ -7,8 +7,10 @@
 @layer base {
   :root {
     /* Akili Brand Colors - from palette */
-    --background: 75 100% 92%; /* #F2FFD7 cream/light yellow */
-    --foreground: 236 93% 29%; /* #050C91 deep navy */
+    --background: 75 100% 92%;
+    /* #F2FFD7 cream/light yellow */
+    --foreground: 236 93% 29%;
+    /* #050C91 deep navy */
 
     --card: 0 0% 100%;
     --card-foreground: 236 93% 29%;
@@ -16,16 +18,20 @@
     --popover: 0 0% 100%;
     --popover-foreground: 236 93% 29%;
 
-    --primary: 236 93% 29%; /* #050C91 deep navy blue */
+    --primary: 236 93% 29%;
+    /* #050C91 deep navy blue */
     --primary-foreground: 75 100% 92%;
 
-    --secondary: 217 84% 91%; /* #D2E0FB light blue */
+    --secondary: 217 84% 91%;
+    /* #D2E0FB light blue */
     --secondary-foreground: 236 93% 29%;
 
     --muted: 217 84% 91%;
-    --muted-foreground: 223 19% 39%; /* #525B76 gray blue */
+    --muted-foreground: 223 19% 39%;
+    /* #525B76 gray blue */
 
-    --accent: 55 82% 79%; /* #F4ED9D yellow */
+    --accent: 55 82% 79%;
+    /* #F4ED9D yellow */
     --accent-foreground: 236 93% 29%;
 
     --destructive: 0 84% 60%;
@@ -38,24 +44,33 @@
     --radius: 1rem;
 
     /* Custom Akili tokens */
-    --navy: 236 93% 29%; /* #050C91 */
-    --navy-light: 223 19% 39%; /* #525B76 */
-    --cream: 75 100% 92%; /* #F2FFD7 */
-    --cream-dark: 55 82% 79%; /* #F4ED9D */
-    --sky: 217 84% 91%; /* #D2E0FB */
-    --sky-deep: 223 19% 39%; /* #525B76 */
-    --gold: 55 82% 79%; /* #F4ED9D yellow */
-    --gold-dark: 25 45% 16%; /* #3A2618 brown */
-    --mint: 113 60% 84%; /* #C3F0BD */
+    --navy: 236 93% 29%;
+    /* #050C91 */
+    --navy-light: 223 19% 39%;
+    /* #525B76 */
+    --cream: 75 100% 92%;
+    /* #F2FFD7 */
+    --cream-dark: 55 82% 79%;
+    /* #F4ED9D */
+    --sky: 217 84% 91%;
+    /* #D2E0FB */
+    --sky-deep: 223 19% 39%;
+    /* #525B76 */
+    --gold: 55 82% 79%;
+    /* #F4ED9D yellow */
+    --gold-dark: 25 45% 16%;
+    /* #3A2618 brown */
+    --mint: 113 60% 84%;
+    /* #C3F0BD */
     --glass: 75 100% 92% / 0.7;
     --glass-border: 217 84% 91% / 0.5;
-    
+
     /* Gradients */
     --gradient-hero: linear-gradient(135deg, hsl(75 100% 92%) 0%, hsl(217 84% 91%) 50%, hsl(113 60% 84%) 100%);
     --gradient-primary: linear-gradient(135deg, hsl(236 93% 29%) 0%, hsl(236 93% 35%) 100%);
     --gradient-gold: linear-gradient(135deg, hsl(55 82% 79%) 0%, hsl(55 82% 70%) 100%);
     --gradient-glass: linear-gradient(135deg, hsl(0 0% 100% / 0.8) 0%, hsl(0 0% 100% / 0.4) 100%);
-    
+
     /* Shadows */
     --shadow-soft: 0 4px 30px hsl(236 93% 29% / 0.1);
     --shadow-glow: 0 0 40px hsl(236 93% 29% / 0.15);
@@ -100,7 +115,7 @@
     --border: 223 19% 25%;
     --input: 223 19% 25%;
     --ring: 55 82% 79%;
-    
+
     --sidebar-background: 236 93% 10%;
     --sidebar-foreground: 75 100% 92%;
     --sidebar-primary: 55 82% 79%;
@@ -126,7 +141,12 @@
     font-family: 'DM Sans', sans-serif;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: 'Outfit', sans-serif;
   }
 }
@@ -171,6 +191,10 @@
     animation: float 6s ease-in-out infinite;
     animation-delay: 2s;
   }
+
+  .floating-subtle {
+    animation: float-subtle 6s ease-in-out infinite;
+  }
 }
 
 @layer utilities {
@@ -181,18 +205,36 @@
 
 /* Animations */
 @keyframes float {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0px) rotate(0deg);
   }
+
   50% {
     transform: translateY(-20px) rotate(2deg);
   }
 }
 
+@keyframes float-subtle {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
 @keyframes liquid-wave {
-  0%, 100% {
+
+  0%,
+  100% {
     border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
   }
+
   50% {
     border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
   }
@@ -203,6 +245,7 @@
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -214,6 +257,7 @@
     opacity: 0;
     transform: scale(0.9);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -225,6 +269,7 @@
     opacity: 0;
     transform: translateX(-50px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -236,6 +281,7 @@
     opacity: 0;
     transform: translateX(50px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -243,15 +289,20 @@
 }
 
 @keyframes blob {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translate(0, 0) scale(1);
   }
+
   25% {
     transform: translate(20px, -30px) scale(1.1);
   }
+
   50% {
     transform: translate(-20px, 20px) scale(0.9);
   }
+
   75% {
     transform: translate(30px, 10px) scale(1.05);
   }
@@ -287,13 +338,33 @@
 }
 
 /* Delay utilities */
-.delay-100 { animation-delay: 100ms; }
-.delay-200 { animation-delay: 200ms; }
-.delay-300 { animation-delay: 300ms; }
-.delay-400 { animation-delay: 400ms; }
-.delay-500 { animation-delay: 500ms; }
-.delay-700 { animation-delay: 700ms; }
-.delay-1000 { animation-delay: 1000ms; }
+.delay-100 {
+  animation-delay: 100ms;
+}
+
+.delay-200 {
+  animation-delay: 200ms;
+}
+
+.delay-300 {
+  animation-delay: 300ms;
+}
+
+.delay-400 {
+  animation-delay: 400ms;
+}
+
+.delay-500 {
+  animation-delay: 500ms;
+}
+
+.delay-700 {
+  animation-delay: 700ms;
+}
+
+.delay-1000 {
+  animation-delay: 1000ms;
+}
 
 /* Scroll animations */
 .scroll-animate {

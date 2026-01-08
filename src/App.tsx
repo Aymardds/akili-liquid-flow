@@ -10,6 +10,7 @@ import Sources from "./pages/Sources";
 import Blog from "./pages/Blog";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
+import FloatingWebButton from "./components/FloatingWebButton";
 
 const queryClient = new QueryClient();
 
@@ -19,7 +20,8 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <BrowserRouter>
+        <FloatingWebButton />
+        <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/a-propos" element={<About />} />
