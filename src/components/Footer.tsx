@@ -15,7 +15,6 @@ const Footer = () => {
       { label: "Contact", href: "/contact" },
     ],
     resources: [
-      { label: "Blog", href: "/blog" },
       { label: "FAQ", href: "#" },
       { label: "Aide", href: "#" },
     ],

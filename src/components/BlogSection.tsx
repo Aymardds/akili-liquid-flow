@@ -5,6 +5,8 @@ import {
     Carousel,
     CarouselContent,
     CarouselItem,
+    CarouselPrevious,
+    CarouselNext,
 } from "@/components/ui/carousel";
 
 const articles = [
@@ -84,6 +86,10 @@ const BlogSection = () => {
                                 </CarouselItem>
                             ))}
                         </CarouselContent>
+                        <div className="flex justify-center gap-4 mt-8">
+                            <CarouselPrevious className="relative inset-0 translate-y-0 h-10 w-10 border-primary/20 text-primary hover:bg-primary/10 hover:text-primary" />
+                            <CarouselNext className="relative inset-0 translate-y-0 h-10 w-10 border-primary/20 text-primary hover:bg-primary/10 hover:text-primary" />
+                        </div>
                     </Carousel>
                 </div>
 
