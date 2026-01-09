@@ -1,6 +1,11 @@
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import blogElectionImage from "@/assets/blog-election-fake-news.png";
+import {
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+} from "@/components/ui/carousel";
 
 const articles = [
     {
@@ -50,7 +55,40 @@ const BlogSection = () => {
                     </Button>
                 </div>
 
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {/* Mobile Carousel */}
+                <div className="md:hidden">
+                    <Carousel opts={{ align: "start" }} className="w-full">
+                        <CarouselContent>
+                            {articles.map((article, index) => (
+                                <CarouselItem key={index}>
+                                    <a href="/blog" className="group block bg-card rounded-2xl overflow-hidden border border-border/50 hover:shadow-lg transition-all duration-300">
+                                        <div className="aspect-video overflow-hidden">
+                                            <img
+                                                src={article.image}
+                                                alt={article.title}
+                                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                            />
+                                        </div>
+                                        <div className="p-6">
+                                            <span className="text-xs font-semibold text-primary uppercase tracking-wider mb-2 block">
+                                                {article.category}
+                                            </span>
+                                            <h3 className="font-bold text-lg text-foreground mb-3 line-clamp-2 group-hover:text-primary transition-colors">
+                                                {article.title}
+                                            </h3>
+                                            <p className="text-sm text-muted-foreground line-clamp-3 font-normal">
+                                                {article.excerpt}
+                                            </p>
+                                        </div>
+                                    </a>
+                                </CarouselItem>
+                            ))}
+                        </CarouselContent>
+                    </Carousel>
+                </div>
+
+                {/* Desktop Grid */}
+                <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {articles.map((article, index) => (
                         <a key={index} href="/blog" className="group block bg-card rounded-2xl overflow-hidden border border-border/50 hover:shadow-lg transition-all duration-300">
                             <div className="aspect-video overflow-hidden">

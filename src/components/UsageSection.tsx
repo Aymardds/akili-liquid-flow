@@ -1,8 +1,45 @@
 import { Monitor, Smartphone } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
+import {
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+} from "@/components/ui/carousel";
 
 const UsageSection = () => {
+    const cards = [
+        {
+            icon: Monitor,
+            title: "Akili sur le web",
+            description: "Vérifiez une information directement via le chatbot en ligne.",
+            buttonText: "Vérifier sur le web",
+            buttonHref: "https://ai.akilicheck.com",
+            bgClass: "bg-secondary/20",
+            iconClass: "text-primary",
+        },
+        {
+            icon: FaWhatsapp,
+            title: "Akili sur WhatsApp",
+            description: "Envoyez un message, un lien ou une image à notre bot pour vérification.",
+            buttonText: "Vérifier sur WhatsApp",
+            buttonHref: "https://wa.me/2250173820625",
+            bgClass: "bg-white",
+            iconClass: "text-[#25D366]",
+            isWhatsApp: true,
+        },
+        {
+            icon: Smartphone,
+            title: "Application mobile Akili",
+            description: "Vérifiez textes, images et vidéos depuis votre téléphone.",
+            buttonText: "Télécharger l’application",
+            buttonHref: "#download",
+            bgClass: "bg-white",
+            iconClass: "text-primary",
+            isDownload: true,
+        }
+    ];
+
     return (
         <section id="usage" className="py-24 bg-background relative overflow-hidden">
             <div className="container mx-auto px-4 md:px-8">
@@ -12,62 +49,86 @@ const UsageSection = () => {
                     </h2>
                 </div>
 
-                <div className="grid md:grid-cols-3 gap-6">
-                    {/* Card 1: Web */}
-                    <div className="flex flex-col h-full bg-secondary/20 rounded-3xl p-6 border border-border">
-                        <div className="flex items-center gap-3 mb-4">
-                            <Monitor className="w-6 h-6 text-primary" />
-                            <h3 className="font-bold text-xl text-foreground">Akili sur le web</h3>
-                        </div>
-                        <p className="text-muted-foreground mb-8 flex-grow">
-                            Vérifiez une information directement via le chatbot en ligne.
-                        </p>
-                        <Button variant="outline" className="w-full justify-between group" asChild>
-                            <a href="https://ai.akilicheck.com" target="_blank" rel="noopener noreferrer">
-                                Vérifier sur le web
-                                <span className="group-hover:translate-x-1 transition-transform">→</span>
-                            </a>
-                        </Button>
-                    </div>
+                {/* Mobile Carousel */}
+                <div className="md:hidden">
+                    <Carousel opts={{ align: "start" }} className="w-full">
+                        <CarouselContent>
+                            {cards.map((card, index) => (
+                                <CarouselItem key={index}>
+                                    <div className={`flex flex-col h-full ${card.bgClass} rounded-3xl p-6 border border-border shadow-sm min-h-[250px]`}>
+                                        <div className="flex items-center gap-3 mb-4">
+                                            <card.icon className={`w-6 h-6 ${card.iconClass}`} />
+                                            <h3 className="font-bold text-xl text-foreground">{card.title}</h3>
+                                        </div>
+                                        <p className="text-muted-foreground mb-8 flex-grow">
+                                            {card.description}
+                                        </p>
+                                        <Button
+                                            variant={card.isWhatsApp ? "default" : "outline"}
+                                            className={`w-full justify-between group ${card.isWhatsApp ? "bg-[#25D366] hover:bg-[#20bd5a] text-white" : ""}`}
+                                            asChild
+                                        >
+                                            <a
+                                                href={card.buttonHref}
+                                                target={card.buttonHref.startsWith('http') ? "_blank" : undefined}
+                                                rel={card.buttonHref.startsWith('http') ? "noopener noreferrer" : undefined}
+                                                onClick={(e) => {
+                                                    if (card.isDownload) {
+                                                        e.preventDefault();
+                                                        document.getElementById('download')?.scrollIntoView({ behavior: 'smooth' });
+                                                    }
+                                                }}
+                                            >
+                                                {card.buttonText}
+                                                <span className="group-hover:translate-x-1 transition-transform">→</span>
+                                            </a>
+                                        </Button>
+                                    </div>
+                                </CarouselItem>
+                            ))}
+                        </CarouselContent>
+                    </Carousel>
+                </div>
 
-                    {/* Card 2: WhatsApp */}
-                    <div className="flex flex-col h-full bg-white rounded-3xl p-6 border border-gray-100 shadow-sm relative overflow-hidden">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-[#25D366]/10 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none" />
-                        <div className="flex items-center gap-3 mb-4">
-                            <FaWhatsapp className="w-6 h-6 text-[#25D366]" />
-                            <h3 className="font-bold text-xl text-foreground">Akili sur WhatsApp</h3>
+                {/* Desktop Grid */}
+                <div className="hidden md:grid md:grid-cols-3 gap-6">
+                    {cards.map((card, index) => (
+                        <div key={index} className={`flex flex-col h-full ${card.bgClass} rounded-3xl p-6 border border-border shadow-sm relative overflow-hidden`}>
+                            {card.isWhatsApp && (
+                                <div className="absolute top-0 right-0 w-32 h-32 bg-[#25D366]/10 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none" />
+                            )}
+                            {card.icon === Smartphone && (
+                                <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none" />
+                            )}
+                            <div className="flex items-center gap-3 mb-4">
+                                <card.icon className={`w-6 h-6 ${card.iconClass}`} />
+                                <h3 className="font-bold text-xl text-foreground">{card.title}</h3>
+                            </div>
+                            <p className="text-muted-foreground mb-8 flex-grow">
+                                {card.description}
+                            </p>
+                            <Button
+                                variant={card.isWhatsApp ? "default" : (card.icon === Smartphone ? "default" : "outline")}
+                                className={`w-full justify-between group ${card.isWhatsApp ? "bg-[#25D366] hover:bg-[#20bd5a] text-white" : ""}`}
+                                asChild
+                            >
+                                <a
+                                    href={card.buttonHref}
+                                    target={card.buttonHref.startsWith('http') ? "_blank" : undefined}
+                                    rel={card.buttonHref.startsWith('http') ? "noopener noreferrer" : undefined}
+                                    onClick={(e) => {
+                                        if (card.isDownload) {
+                                            e.preventDefault();
+                                            document.getElementById('download')?.scrollIntoView({ behavior: 'smooth' });
+                                        }
+                                    }}
+                                >
+                                    {card.buttonText}
+                                    <span className="group-hover:translate-x-1 transition-transform">→</span>
+                                </a>
+                            </Button>
                         </div>
-                        <p className="text-muted-foreground mb-4 flex-grow">
-                            Envoyez un message, un lien ou une image à notre bot pour vérification.
-                        </p>
-                        <Button className="w-full justify-between bg-[#25D366] hover:bg-[#20bd5a] text-white group" asChild>
-                            <a href="https://wa.me/2250173820625" target="_blank" rel="noopener noreferrer">
-                                Vérifier sur WhatsApp
-                                <span className="group-hover:translate-x-1 transition-transform">→</span>
-                            </a>
-                        </Button>
-                    </div>
-
-                    {/* Card 3: Mobile App */}
-                    <div className="flex flex-col h-full bg-white rounded-3xl p-6 border border-gray-100 shadow-sm relative overflow-hidden">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none" />
-                        <div className="flex items-center gap-3 mb-4">
-                            <Smartphone className="w-6 h-6 text-primary" />
-                            <h3 className="font-bold text-xl text-foreground">Application mobile Akili</h3>
-                        </div>
-                        <p className="text-muted-foreground mb-6 flex-grow">
-                            Vérifiez textes, images et vidéos depuis votre téléphone.
-                        </p>
-                        <Button variant="default" className="w-full justify-between group" asChild>
-                            <a href="#download" onClick={(e) => {
-                                e.preventDefault();
-                                document.getElementById('download')?.scrollIntoView({ behavior: 'smooth' });
-                            }}>
-                                Télécharger l’application
-                                <span className="group-hover:translate-x-1 transition-transform">→</span>
-                            </a>
-                        </Button>
-                    </div>
+                    ))}
                 </div>
             </div>
         </section>
