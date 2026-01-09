@@ -1,5 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import blogElectionImage from "@/assets/blog-election-fake-news.png";
 
 const articles = [
     {
@@ -18,7 +19,7 @@ const articles = [
         category: "Analyse",
         title: "Élections en Afrique de l’Ouest : comment circulent les fausses informations",
         excerpt: "Décryptage des mécanismes de désinformation observés lors des dernières campagnes électorales.",
-        image: "https://images.unsplash.com/photo-1540910419868-474947cebacb?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+        image: blogElectionImage,
     },
     {
         category: "Économie",
