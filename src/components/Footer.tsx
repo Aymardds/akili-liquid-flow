@@ -21,8 +21,8 @@ const Footer = () => {
     ],
     legal: [
       { label: "CGU", href: "https://akilicheck.com/conditions-generales-dutilisation-de-lapplication-akili/" },
-      { label: "Confidentialité", href: "https://akilicheck.com/conditions-generales-dutilisation-de-lapplication-akili/" },
-      { label: "Cookies", href: "#" },
+      { label: "Politique de confidentialité", href: "https://akilicheck.com/conditions-generales-dutilisation-de-lapplication-akili/" },
+      { label: "Mentions Légales", href: "#" },
     ],
   };
 
