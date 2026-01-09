@@ -9,6 +9,7 @@ import About from "./pages/About";
 import Sources from "./pages/Sources";
 import Blog from "./pages/Blog";
 import Contact from "./pages/Contact";
+import CGU from "./pages/CGU";
 import NotFound from "./pages/NotFound";
 import FloatingWebButton from "./components/FloatingWebButton";
 
@@ -28,6 +29,7 @@ const App = () => (
             <Route path="/nos-sources" element={<Sources />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/cgu" element={<CGU />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
