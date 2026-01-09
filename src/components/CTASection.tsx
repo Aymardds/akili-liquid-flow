@@ -10,7 +10,7 @@ const CTASection = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section className="py-24 lg:py-32 relative overflow-hidden">
+    <section id="download" className="py-24 lg:py-32 relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-navy" />
       <div className="absolute inset-0 pointer-events-none">
@@ -47,26 +47,15 @@ const CTASection = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="font-display text-3xl md:text-4xl lg:text-6xl font-bold text-primary-foreground mb-6"
           >
-            Rejoignez des milliers d'utilisateurs{" "}
-            <span className="text-gold">heureux</span>
+            Téléchargez Akili et commencez à vérifier l’information dès maintenant.
           </motion.h2>
-
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-lg md:text-xl text-primary-foreground/70 mb-12 max-w-2xl mx-auto"
-          >
-            Téléchargez Akili maintenant et commencez à vérifier l'information.
-            Ensemble, luttons contre la désinformation.
-          </motion.p>
 
           {/* CTA Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4"
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8"
           >
             <Button
               variant="cta"
@@ -100,7 +89,6 @@ const CTASection = () => {
             className="mt-12 flex items-center justify-center gap-6 text-primary-foreground/50"
           >
             <span className="flex items-center gap-2">
-              <Download className="w-4 h-4" />
               Gratuit
             </span>
             <span className="w-1 h-1 rounded-full bg-current" />

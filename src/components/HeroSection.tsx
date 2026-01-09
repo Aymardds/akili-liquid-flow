@@ -61,7 +61,6 @@ const HeroSection = () => {
             >
               Avant de relayer une information, Akili vous aide
               à vérifier ce qui est vrai, trompeur ou faux, en un seul clic.
-              La première application de lutte contre la désinformation en Afrique francophone.
             </motion.p>
 
             <motion.div
@@ -72,10 +71,10 @@ const HeroSection = () => {
             >
               <Button variant="hero" size="xl">
                 <Download className="w-5 h-5" />
-                Télécharger maintenant
+                Télécharger l’application
               </Button>
               <Button variant="outline" size="xl">
-                Découvrir Akili
+                Vérifier une information maintenant
               </Button>
             </motion.div>
 
@@ -87,9 +86,9 @@ const HeroSection = () => {
               className="flex items-center justify-center lg:justify-start gap-8 mt-12"
             >
               {[
-                { value: "50K+", label: "Utilisateurs" },
-                { value: "100K+", label: "Vérifications" },
-                { value: "4.8", label: "Note App Store" },
+                { value: "50K+", label: "utilisateurs" },
+                { value: "100K+", label: "vérifications" },
+                { value: "4,8", label: "Note" },
               ].map((stat, i) => (
                 <div key={i} className="text-center">
                   <div className="font-display text-2xl md:text-3xl font-bold text-foreground">

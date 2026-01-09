@@ -14,21 +14,21 @@ const testimonials = [
     name: "Aminata Diallo",
     role: "Journaliste, Dakar",
     content:
-      "Akili a révolutionné ma façon de vérifier l'information. Un outil indispensable pour tout professionnel des médias en Afrique.",
+      "Un outil indispensable pour les professionnels des médias.",
     rating: 5,
   },
   {
     name: "Kouassi Emmanuel",
     role: "Enseignant, Abidjan",
     content:
-      "J'utilise Akili avec mes étudiants pour leur apprendre à distinguer le vrai du faux. L'interface est intuitive et les résultats sont fiables.",
+      "J’utilise Akili avec mes étudiants pour apprendre à distinguer le vrai du faux.",
     rating: 5,
   },
   {
     name: "Fatou Ndiaye",
     role: "Activiste, Bamako",
     content:
-      "Dans un monde où la désinformation peut avoir des conséquences graves, Akili est notre bouclier. Je recommande à tous !",
+      "Un véritable outil de protection citoyenne.",
     rating: 5,
   },
 ];
@@ -69,12 +69,8 @@ const TestimonialsSection = () => {
             Témoignages
           </span>
           <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-            Ils nous font <span className="gradient-text">confiance</span>
+            Ils utilisent <span className="gradient-text">Akili</span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Des milliers d'utilisateurs à travers l'Afrique francophone
-            utilisent Akili au quotidien
-          </p>
         </motion.div>
 
         {/* Testimonials Grid */}

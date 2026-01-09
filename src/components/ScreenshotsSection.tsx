@@ -92,11 +92,10 @@ const ScreenshotsSection = () => {
             L'application
           </motion.span>
           <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 tracking-tight">
-            Découvrez <span className="gradient-text">Akili</span> en action
+            Akili en <span className="gradient-text">action</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Une interface élégante et intuitive conçue pour une expérience
-            fluide
+            Une interface simple et intuitive conçue pour vérifier l’information en quelques secondes.
           </p>
         </motion.div>
 
@@ -228,8 +227,8 @@ const ScreenshotsSection = () => {
                 whileHover={{ scale: 1.2 }}
                 whileTap={{ scale: 0.9 }}
                 className={`h-3 rounded-full transition-all duration-500 ${index === activeIndex
-                    ? "bg-gradient-to-r from-primary to-gold w-12 shadow-lg shadow-primary/50"
-                    : "bg-border/60 w-3 hover:bg-muted-foreground/60"
+                  ? "bg-gradient-to-r from-primary to-gold w-12 shadow-lg shadow-primary/50"
+                  : "bg-border/60 w-3 hover:bg-muted-foreground/60"
                   }`}
               />
             ))}

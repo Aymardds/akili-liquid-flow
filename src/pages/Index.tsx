@@ -1,14 +1,32 @@
 import { Helmet } from "react-helmet-async";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
-import FeaturesSection from "@/components/FeaturesSection";
-import AvailabilitySection from "@/components/AvailabilitySection";
+import UsageSection from "@/components/UsageSection";
+import HowItWorksSection from "@/components/HowItWorksSection";
+import TrustSection from "@/components/TrustSection";
+import CapabilitiesSection from "@/components/CapabilitiesSection";
+import BlogSection from "@/components/BlogSection";
 import ScreenshotsSection from "@/components/ScreenshotsSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
 
 const Index = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash) {
+      const element = document.getElementById(location.hash.substring(1));
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: "smooth" });
+        }, 100);
+      }
+    }
+  }, [location]);
+
   return (
     <>
       <Helmet>
@@ -35,9 +53,12 @@ const Index = () => {
         <Navbar />
         <main>
           <HeroSection />
-          <FeaturesSection />
-          <AvailabilitySection />
+          <UsageSection />
+          <HowItWorksSection />
           <ScreenshotsSection />
+          <TrustSection />
+          <CapabilitiesSection />
+          <BlogSection />
           <TestimonialsSection />
           <CTASection />
         </main>
