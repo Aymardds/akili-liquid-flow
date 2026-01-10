@@ -2,8 +2,10 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { Mail, MapPin, Send } from "lucide-react";
+import { Mail, MapPin, Send, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import emailjs from "@emailjs/browser";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 
@@ -16,12 +18,45 @@ const Contact = () => {
         message: ""
     });
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Placeholder - would integrate with backend
-        console.log("Form submitted:", formData);
-        alert("Merci pour votre message ! Nous vous répondrons bientôt.");
-        setFormData({ name: "", email: "", message: "" });
+        setIsSubmitting(true);
+
+        try {
+            const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+            const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+            const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+            if (!serviceId || !templateId || !publicKey) {
+                throw new Error("Email service configuration missing");
+            }
+
+            await emailjs.send(
+                serviceId,
+                templateId,
+                {
+                    from_name: formData.name,
+                    from_email: formData.email,
+                    message: formData.message,
+                    to_name: "Rédaction Akili",
+                },
+                publicKey
+            );
+
+            toast.success("Message envoyé !", {
+                description: "Votre message a été transmis à la rédaction. Une confirmation vous a été envoyée.",
+            });
+            setFormData({ name: "", email: "", message: "" });
+        } catch (error) {
+            console.error("Error sending email:", error);
+            toast.error("Erreur d'envoi", {
+                description: "Une erreur est survenue lors de l'envoi de votre message. Veuillez réessayer plus tard.",
+            });
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -210,9 +245,13 @@ const Contact = () => {
                                             </label>
                                         </div>
 
-                                        <Button type="submit" variant="hero" size="lg" className="w-full">
-                                            <Send className="w-5 h-5" />
-                                            Envoyer
+                                        <Button type="submit" variant="hero" size="lg" className="w-full" disabled={isSubmitting}>
+                                            {isSubmitting ? (
+                                                <Loader2 className="w-5 h-5 animate-spin" />
+                                            ) : (
+                                                <Send className="w-5 h-5" />
+                                            )}
+                                            {isSubmitting ? "Envoi en cours..." : "Envoyer"}
                                         </Button>
                                     </div>
                                 </form>

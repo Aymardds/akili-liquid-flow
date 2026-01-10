@@ -69,12 +69,16 @@ const HeroSection = () => {
               transition={{ delay: 0.7, duration: 0.8 }}
               className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
             >
-              <Button variant="hero" size="xl">
-                <Download className="w-5 h-5" />
-                Télécharger l’application
+              <Button variant="hero" size="xl" asChild>
+                <a href="#download">
+                  <Download className="w-5 h-5" />
+                  Télécharger l’application
+                </a>
               </Button>
-              <Button variant="outline" size="xl">
-                Vérifier une information maintenant
+              <Button variant="outline" size="xl" asChild>
+                <a href="https://ai.akilicheck.com" target="_blank" rel="noopener noreferrer">
+                  Vérifier une information maintenant
+                </a>
               </Button>
             </motion.div>
 
