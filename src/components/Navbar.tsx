@@ -94,6 +94,9 @@ const Navbar = () => {
           </div>
 
           {/* CTA Button */}
+
+          {/* CTA Button */}
+
           <div className="hidden md:block">
             <Button
               variant="hero"
@@ -101,14 +104,14 @@ const Navbar = () => {
               asChild
             >
               <a
-                href="https://play.google.com/store/apps/details?id=com.litekev.akili&hl=fr"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="#download"
+                onClick={(e) => handleScroll(e, "#download")}
               >
                 <Download className="w-4 h-4" />
                 Télécharger
               </a>
             </Button>
+
           </div>
 
           {/* Mobile Menu Button */}
@@ -193,8 +196,8 @@ const Navbar = () => {
             </Button>
           </div>
         </motion.div>
-      </div>
-    </motion.nav>
+      </div >
+    </motion.nav >
   );
 };
 

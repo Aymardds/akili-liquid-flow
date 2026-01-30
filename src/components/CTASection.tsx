@@ -61,23 +61,39 @@ const CTASection = () => {
               variant="cta"
               size="xl"
               className="w-full sm:w-auto"
+              asChild
             >
-              <Apple className="w-6 h-6" />
-              <div className="text-left">
-                <span className="text-xs block opacity-70">Télécharger sur</span>
-                <span className="font-bold">App Store</span>
-              </div>
+              <a
+                href="https://apps.apple.com/fr/app/akili/id6738965572"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2"
+              >
+                <Apple className="w-6 h-6" />
+                <div className="text-left">
+                  <span className="text-xs block opacity-70">Télécharger sur</span>
+                  <span className="font-bold">App Store</span>
+                </div>
+              </a>
             </Button>
             <Button
               variant="glass"
               size="xl"
               className="w-full sm:w-auto"
+              asChild
             >
-              <PlayCircle className="w-6 h-6" />
-              <div className="text-left">
-                <span className="text-xs block opacity-70">Disponible sur</span>
-                <span className="font-bold">Google Play</span>
-              </div>
+              <a
+                href="https://play.google.com/store/apps/details?id=com.litekev.akili&pcampaignid=web_share"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2"
+              >
+                <PlayCircle className="w-6 h-6" />
+                <div className="text-left">
+                  <span className="text-xs block opacity-70">Disponible sur</span>
+                  <span className="font-bold">Google Play</span>
+                </div>
+              </a>
             </Button>
           </motion.div>
 
