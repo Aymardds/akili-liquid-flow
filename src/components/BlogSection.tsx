@@ -1,6 +1,5 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import blogElectionImage from "@/assets/blog-election-fake-news.png";
 import {
     Carousel,
     CarouselContent,
@@ -8,35 +7,20 @@ import {
     CarouselPrevious,
     CarouselNext,
 } from "@/components/ui/carousel";
-
-const articles = [
-    {
-        category: "Vérification",
-        title: "Cette vidéo attribuée à un ministre est-elle authentique ?",
-        excerpt: "Une vidéo circulant sur les réseaux sociaux prétend montrer un ministre en situation délicate. Notre analyse.",
-        image: "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
-    },
-    {
-        category: "Faux",
-        title: "Non, cette image ne montre pas des violences récentes à Bamako",
-        excerpt: "L'image partagée massivement date en réalité de 2018 et a été prise dans un autre pays.",
-        image: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
-    },
-    {
-        category: "Analyse",
-        title: "Élections en Afrique de l’Ouest : comment circulent les fausses informations",
-        excerpt: "Décryptage des mécanismes de désinformation observés lors des dernières campagnes électorales.",
-        image: blogElectionImage,
-    },
-    {
-        category: "Économie",
-        title: "Dette cachée du Sénégal : ce que disent vraiment les chiffres",
-        excerpt: "Analyse des rapports officiels pour démêler le vrai du faux sur la situation économique.",
-        image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
-    }
-];
+import { useBlogPosts } from "@/hooks/useBlogPosts";
 
 const BlogSection = () => {
+    const { posts, loading, error } = useBlogPosts();
+
+    // Take only the first 4 articles for the homepage
+    const articles = posts.slice(0, 4).map(post => ({
+        category: post.category,
+        title: post.title,
+        excerpt: post.excerpt,
+        image: post.image,
+        link: post.link,
+    }));
+
     return (
         <section id="blog-section" className="py-24 bg-background">
             <div className="container mx-auto px-4 md:px-8">
@@ -57,70 +41,93 @@ const BlogSection = () => {
                     </Button>
                 </div>
 
-                {/* Mobile Carousel */}
-                <div className="md:hidden">
-                    <Carousel opts={{ align: "start" }} className="w-full">
-                        <CarouselContent>
-                            {articles.map((article, index) => (
-                                <CarouselItem key={index}>
-                                    <a href="/blog" className="group block bg-card rounded-2xl overflow-hidden border border-border/50 hover:shadow-lg transition-all duration-300">
-                                        <div className="aspect-video overflow-hidden">
-                                            <img
-                                                src={article.image}
-                                                alt={article.title}
-                                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                            />
-                                        </div>
-                                        <div className="p-6">
-                                            <span className="text-xs font-semibold text-primary uppercase tracking-wider mb-2 block">
-                                                {article.category}
-                                            </span>
-                                            <h3 className="font-bold text-lg text-foreground mb-3 line-clamp-2 group-hover:text-primary transition-colors">
-                                                {article.title}
-                                            </h3>
-                                            <p className="text-sm text-muted-foreground line-clamp-3 font-normal">
-                                                {article.excerpt}
-                                            </p>
-                                        </div>
-                                    </a>
-                                </CarouselItem>
-                            ))}
-                        </CarouselContent>
-                        <div className="flex justify-center gap-4 mt-8">
-                            <CarouselPrevious className="relative inset-0 translate-y-0 h-10 w-10 border-primary/20 text-primary hover:bg-primary/10 hover:text-primary" />
-                            <CarouselNext className="relative inset-0 translate-y-0 h-10 w-10 border-primary/20 text-primary hover:bg-primary/10 hover:text-primary" />
-                        </div>
-                    </Carousel>
-                </div>
+                {/* Loading State */}
+                {loading && (
+                    <div className="flex justify-center items-center py-20">
+                        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+                        <span className="ml-3 text-muted-foreground">Chargement des articles...</span>
+                    </div>
+                )}
 
-                {/* Desktop Grid */}
-                <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {articles.map((article, index) => (
-                        <a key={index} href="/blog" className="group block bg-card rounded-2xl overflow-hidden border border-border/50 hover:shadow-lg transition-all duration-300">
-                            <div className="aspect-video overflow-hidden">
-                                <img
-                                    src={article.image}
-                                    alt={article.title}
-                                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                />
-                            </div>
-                            <div className="p-6">
-                                <span className="text-xs font-semibold text-primary uppercase tracking-wider mb-2 block">
-                                    {article.category}
-                                </span>
-                                <h3 className="font-bold text-lg text-foreground mb-3 line-clamp-2 group-hover:text-primary transition-colors">
-                                    {article.title}
-                                </h3>
-                                <p className="text-sm text-muted-foreground line-clamp-3">
-                                    {article.excerpt}
-                                </p>
-                            </div>
-                        </a>
-                    ))}
-                </div>
+                {/* Error State - Show message if scraping failed */}
+                {error && !loading && (
+                    <div className="mb-4 p-4 bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 rounded-lg">
+                        <p className="text-sm text-amber-800 dark:text-amber-200">
+                            {error}
+                        </p>
+                    </div>
+                )}
+
+                {/* Articles Display */}
+                {!loading && (
+                    <>
+                        {/* Mobile Carousel */}
+                        <div className="md:hidden">
+                            <Carousel opts={{ align: "start" }} className="w-full">
+                                <CarouselContent>
+                                    {articles.map((article, index) => (
+                                        <CarouselItem key={index}>
+                                            <a href={article.link} className="group block bg-card rounded-2xl overflow-hidden border border-border/50 hover:shadow-lg transition-all duration-300">
+                                                <div className="aspect-video overflow-hidden">
+                                                    <img
+                                                        src={article.image}
+                                                        alt={article.title}
+                                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                                    />
+                                                </div>
+                                                <div className="p-6">
+                                                    <span className="text-xs font-semibold text-primary uppercase tracking-wider mb-2 block">
+                                                        {article.category}
+                                                    </span>
+                                                    <h3 className="font-bold text-lg text-foreground mb-3 line-clamp-2 group-hover:text-primary transition-colors">
+                                                        {article.title}
+                                                    </h3>
+                                                    <p className="text-sm text-muted-foreground line-clamp-3 font-normal">
+                                                        {article.excerpt}
+                                                    </p>
+                                                </div>
+                                            </a>
+                                        </CarouselItem>
+                                    ))}
+                                </CarouselContent>
+                                <div className="flex justify-center gap-4 mt-8">
+                                    <CarouselPrevious className="relative inset-0 translate-y-0 h-10 w-10 border-primary/20 text-primary hover:bg-primary/10 hover:text-primary" />
+                                    <CarouselNext className="relative inset-0 translate-y-0 h-10 w-10 border-primary/20 text-primary hover:bg-primary/10 hover:text-primary" />
+                                </div>
+                            </Carousel>
+                        </div>
+
+                        {/* Desktop Grid */}
+                        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                            {articles.map((article, index) => (
+                                <a key={index} href={article.link} className="group block bg-card rounded-2xl overflow-hidden border border-border/50 hover:shadow-lg transition-all duration-300">
+                                    <div className="aspect-video overflow-hidden">
+                                        <img
+                                            src={article.image}
+                                            alt={article.title}
+                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                        />
+                                    </div>
+                                    <div className="p-6">
+                                        <span className="text-xs font-semibold text-primary uppercase tracking-wider mb-2 block">
+                                            {article.category}
+                                        </span>
+                                        <h3 className="font-bold text-lg text-foreground mb-3 line-clamp-2 group-hover:text-primary transition-colors">
+                                            {article.title}
+                                        </h3>
+                                        <p className="text-sm text-muted-foreground line-clamp-3">
+                                            {article.excerpt}
+                                        </p>
+                                    </div>
+                                </a>
+                            ))}
+                        </div>
+                    </>
+                )}
             </div>
         </section>
     );
 };
 
 export default BlogSection;
+

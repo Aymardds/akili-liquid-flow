@@ -90,9 +90,9 @@ const HeroSection = () => {
               className="flex items-center justify-center lg:justify-start gap-8 mt-12"
             >
               {[
-                { value: "50K+", label: "utilisateurs" },
-                { value: "100K+", label: "vérifications" },
-                { value: "4,8", label: "Note" },
+                { value: "", label: "" },
+                { value: "", label: "" },
+                { value: "", label: "" },
               ].map((stat, i) => (
                 <div key={i} className="text-center">
                   <div className="font-display text-2xl md:text-3xl font-bold text-foreground">

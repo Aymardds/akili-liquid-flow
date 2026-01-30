@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Akili - Articles de vérification</title>
+    <link>https://akilicheck.com</link>
+    <description>Analyses, décryptages et vérifications des informations en Afrique francophone</description>
+    <language>fr</language>
+    <atom:link href="https://akilicheck.com/feed.xml" rel="self" type="application/rss+xml"/>
+    
+    <item>
+      <title>Cette vidéo attribuée à un ministre est-elle authentique ?</title>
+      <link>https://akilicheck.com/blog/video-ministre-authentique</link>
+      <description>Une vidéo circulant sur les réseaux sociaux prétend montrer un ministre en situation délicate. Notre analyse.</description>
+      <category>Vérification</category>
+      <pubDate>Mon, 27 Jan 2026 10:00:00 GMT</pubDate>
+      <guid>https://akilicheck.com/blog/video-ministre-authentique</guid>
+      <enclosure url="https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=800&amp;auto=format&amp;fit=crop&amp;q=60&amp;ixlib=rb-4.0.3" type="image/jpeg"/>
+    </item>
+    
+    <item>
+      <title>Non, cette image ne montre pas des violences récentes à Bamako</title>
+      <link>https://akilicheck.com/blog/image-violences-bamako</link>
+      <description>L'image partagée massivement date en réalité de 2018 et a été prise dans un autre pays.</description>
+      <category>Faux</category>
+      <pubDate>Fri, 24 Jan 2026 14:30:00 GMT</pubDate>
+      <guid>https://akilicheck.com/blog/image-violences-bamako</guid>
+      <enclosure url="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&amp;auto=format&amp;fit=crop&amp;q=60&amp;ixlib=rb-4.0.3" type="image/jpeg"/>
+    </item>
+    
+    <item>
+      <title>Élections en Afrique de l'Ouest : comment circulent les fausses informations</title>
+      <link>https://akilicheck.com/blog/elections-fausses-informations</link>
+      <description>Décryptage des mécanismes de désinformation observés lors des dernières campagnes électorales.</description>
+      <category>Analyse</category>
+      <pubDate>Wed, 22 Jan 2026 09:15:00 GMT</pubDate>
+      <guid>https://akilicheck.com/blog/elections-fausses-informations</guid>
+      <enclosure url="https://images.unsplash.com/photo-1540910419892-4a36d2c3266c?w=800&amp;auto=format&amp;fit=crop&amp;q=60&amp;ixlib=rb-4.0.3" type="image/jpeg"/>
+    </item>
+    
+    <item>
+      <title>Dette cachée du Sénégal : ce que disent vraiment les chiffres</title>
+      <link>https://akilicheck.com/blog/dette-senegal-chiffres</link>
+      <description>Analyse des rapports officiels pour démêler le vrai du faux sur la situation économique.</description>
+      <category>Économie</category>
+      <pubDate>Mon, 20 Jan 2026 16:45:00 GMT</pubDate>
+      <guid>https://akilicheck.com/blog/dette-senegal-chiffres</guid>
+      <enclosure url="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&amp;auto=format&amp;fit=crop&amp;q=60&amp;ixlib=rb-4.0.3" type="image/jpeg"/>
+    </item>
+    
+  </channel>
+</rss>
