@@ -63,16 +63,17 @@ export const useBlogPosts = () => {
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                // Fetch the HTML page via corsproxy.io
+                // Fetch the HTML page via allorigins.win (more reliable for production)
                 const response = await fetch(
-                    `https://corsproxy.io/?${encodeURIComponent(
+                    `https://api.allorigins.win/get?url=${encodeURIComponent(
                         "https://tamamedia.com/verificateurs"
                     )}`
                 );
 
                 if (!response.ok) throw new Error("Erreur réseau");
 
-                const htmlString = await response.text();
+                const data = await response.json();
+                const htmlString = data.contents;
 
                 if (!htmlString) throw new Error("Aucun contenu récupéré");
 
