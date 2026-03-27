@@ -10,6 +10,7 @@ import Sources from "./pages/Sources";
 import Blog from "./pages/Blog";
 import Contact from "./pages/Contact";
 import CGU from "./pages/CGU";
+import AkiliEurope from "./pages/AkiliEurope";
 import NotFound from "./pages/NotFound";
 import FloatingWebButton from "./components/FloatingWebButton";
 
@@ -30,6 +31,7 @@ const App = () => (
             <Route path="/blog" element={<Blog />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/cgu" element={<CGU />} />
+            <Route path="/europe" element={<AkiliEurope />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Download, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import phoneMockup1 from "@/assets/phone-mockup-1.png";
 import akiliLogo from "@/assets/akili-logo.png";
 
@@ -67,7 +68,7 @@ const HeroSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7, duration: 0.8 }}
-              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
+              className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center lg:justify-start"
             >
               <Button variant="hero" size="xl" asChild>
                 <a href="#download">
@@ -80,6 +81,24 @@ const HeroSection = () => {
                   Vérifier une information maintenant
                 </a>
               </Button>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8, duration: 0.8 }}
+              className="mt-6 flex justify-center lg:justify-start"
+            >
+              <Link
+                 to="/europe"
+                 className="inline-flex items-center gap-3 px-6 py-3 bg-white/60 hover:bg-white backdrop-blur-md rounded-full border border-border/50 text-foreground font-semibold shadow-sm transition-all hover:-translate-y-1 hover:shadow-md group"
+              >
+                Akili Check
+                <span className="text-[11px] font-bold text-white bg-[#E8590C] px-2 py-0.5 rounded-full tracking-wider group-hover:scale-105 transition-transform">
+                  EUROPE
+                </span>
+                <span className="text-muted-foreground ml-1">→</span>
+              </Link>
             </motion.div>
 
             {/* Stats */}

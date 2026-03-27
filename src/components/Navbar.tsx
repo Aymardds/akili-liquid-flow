@@ -97,7 +97,17 @@ const Navbar = () => {
 
           {/* CTA Button */}
 
-          <div className="hidden md:block">
+          <div className="hidden md:flex items-center gap-4">
+            <Link
+              to="/europe"
+              className="px-4 py-2 text-sm font-medium text-foreground bg-secondary/50 hover:bg-secondary rounded-full border border-border transition-colors flex items-center gap-2"
+            >
+              Akili Check
+              <span className="text-[10px] font-bold text-white bg-[#E8590C] px-1.5 py-0.5 rounded-full tracking-wider leading-none">
+                EUROPE
+              </span>
+            </Link>
+
             <Button
               variant="hero"
               size="default"
@@ -111,7 +121,6 @@ const Navbar = () => {
                 Télécharger
               </a>
             </Button>
-
           </div>
 
           {/* Mobile Menu Button */}
@@ -165,6 +174,17 @@ const Navbar = () => {
             >
               Articles
             </a>
+
+            <Link
+              to="/europe"
+              onClick={() => setIsOpen(false)}
+              className="flex items-center gap-2 text-foreground font-medium transition-colors bg-secondary/30 p-2 rounded-lg"
+            >
+              Akili Check
+              <span className="text-[10px] font-bold text-white bg-[#E8590C] px-1.5 py-0.5 rounded-full tracking-wider leading-none">
+                EUROPE
+              </span>
+            </Link>
 
             <Link
               to="/a-propos"
