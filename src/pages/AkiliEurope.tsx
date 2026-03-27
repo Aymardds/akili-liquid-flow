@@ -133,7 +133,7 @@ const EuropeHero = () => {
             <span className="rounded-full bg-green-600 text-white font-semibold px-8 py-3 text-sm flex items-center justify-center shadow-md">✓ Inscrit !</span>
           ) : (
             <button type="submit" className="rounded-full bg-primary text-primary-foreground font-semibold px-8 py-3 text-sm hover:bg-primary/90 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 whitespace-nowrap">
-              M'avertir
+              M'avertir du lancement
             </button>
           )}
         </motion.form>
@@ -447,7 +447,7 @@ const NotifySection = () => {
             </span>
           ) : (
             <button type="submit" className="rounded-full bg-[#E8590C] text-white font-semibold px-8 py-3 text-sm hover:bg-[#d14e0b] shadow-md hover:shadow-lg transition-all hover:-translate-y-0.5 whitespace-nowrap">
-              M'avertir
+              M'avertir du lancement
             </button>
           )}
         </motion.form>
