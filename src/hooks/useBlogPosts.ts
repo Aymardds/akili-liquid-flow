@@ -11,7 +11,13 @@ export interface BlogPost {
     link: string;
 }
 
-// Fallback posts if scraping fails
+// Tama Media RSS feed URL
+const TAMA_MEDIA_RSS = "https://tamamedia.com/api/rss";
+
+// CORS proxy to bypass browser restrictions
+const CORS_PROXY = "https://api.allorigins.win/raw?url=";
+
+// Fallback posts if RSS feed is unavailable
 const fallbackPosts: BlogPost[] = [
     {
         id: "1",
@@ -21,7 +27,7 @@ const fallbackPosts: BlogPost[] = [
         author: "Équipe Akili",
         category: "Fact-checking",
         image: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&h=500&fit=crop",
-        link: "#"
+        link: "https://tamamedia.com/category/les-verificateurs/"
     },
     {
         id: "2",
@@ -31,7 +37,7 @@ const fallbackPosts: BlogPost[] = [
         author: "Équipe Akili",
         category: "Technologie",
         image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=500&fit=crop",
-        link: "#"
+        link: "https://tamamedia.com/category/les-verificateurs/"
     },
     {
         id: "3",
@@ -41,7 +47,7 @@ const fallbackPosts: BlogPost[] = [
         author: "Équipe Akili",
         category: "Analyse",
         image: "https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?w=800&h=500&fit=crop",
-        link: "#"
+        link: "https://tamamedia.com/category/les-verificateurs/"
     },
     {
         id: "4",
@@ -51,9 +57,105 @@ const fallbackPosts: BlogPost[] = [
         author: "Équipe Akili",
         category: "Méthodologie",
         image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=500&fit=crop",
-        link: "#"
+        link: "https://tamamedia.com/category/les-verificateurs/"
     }
 ];
+
+/**
+ * Format an RSS pubDate string into a human-readable French date.
+ */
+const formatDate = (pubDate: string): string => {
+    if (!pubDate) return "Récent";
+    try {
+        return new Date(pubDate).toLocaleDateString("fr-FR", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+        });
+    } catch {
+        return "Récent";
+    }
+};
+
+/**
+ * Fetch and parse the Tama Media RSS feed, returning BlogPost objects.
+ */
+const fetchRssPosts = async (): Promise<BlogPost[]> => {
+    const fetchUrl = `${CORS_PROXY}${encodeURIComponent(TAMA_MEDIA_RSS)}`;
+
+    const response = await fetch(fetchUrl);
+    if (!response.ok) {
+        throw new Error(`Erreur réseau : ${response.statusText}`);
+    }
+
+    const text = await response.text();
+
+    // Guard against the proxy returning HTML instead of XML
+    const trimmed = text.trim().toLowerCase();
+    if (trimmed.startsWith("<!doctype html") || trimmed.startsWith("<html")) {
+        throw new Error("Le proxy a retourné du HTML au lieu du flux RSS XML.");
+    }
+
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(text, "text/xml");
+
+    const parserError = xmlDoc.querySelector("parsererror");
+    if (parserError) {
+        throw new Error(`Erreur de parsing XML : ${parserError.textContent}`);
+    }
+
+    const items = Array.from(xmlDoc.querySelectorAll("item"));
+    if (items.length === 0) {
+        throw new Error("Aucun article trouvé dans le flux RSS.");
+    }
+
+    return items.map((item, index) => {
+        const title = item.querySelector("title")?.textContent?.trim() || "";
+        const link = item.querySelector("link")?.textContent?.trim() || "https://tamamedia.com/category/les-verificateurs/";
+        const description = item.querySelector("description")?.textContent || "";
+        const pubDate = item.querySelector("pubDate")?.textContent || "";
+        const category = item.querySelector("category")?.textContent?.trim() || "Fact-checking";
+
+        // Clean description from HTML tags for excerpt
+        const excerpt = description.replace(/<[^>]*>/g, "").trim().slice(0, 180) + "...";
+
+        // Try to extract image from various RSS fields
+        let image = "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&h=500&fit=crop";
+
+        // 1. media:content or media:thumbnail
+        const mediaContent = item.querySelector("content, thumbnail");
+        if (mediaContent) {
+            const url = mediaContent.getAttribute("url");
+            if (url) image = url;
+        }
+
+        // 2. enclosure (image attachment)
+        if (image.includes("unsplash")) {
+            const enclosure = item.querySelector("enclosure");
+            if (enclosure && enclosure.getAttribute("type")?.startsWith("image/")) {
+                const url = enclosure.getAttribute("url");
+                if (url) image = url;
+            }
+        }
+
+        // 3. <img> inside description HTML
+        if (image.includes("unsplash") && description) {
+            const imgMatch = description.match(/<img[^>]+src="([^">]+)"/);
+            if (imgMatch) image = imgMatch[1];
+        }
+
+        return {
+            id: `rss-${index}`,
+            title,
+            excerpt,
+            date: formatDate(pubDate),
+            author: "Les Vérificateurs",
+            category,
+            image,
+            link,
+        };
+    });
+};
 
 export const useBlogPosts = () => {
     const [posts, setPosts] = useState<BlogPost[]>([]);
@@ -61,129 +163,29 @@ export const useBlogPosts = () => {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        const fetchPosts = async () => {
+        let cancelled = false;
+
+        const load = async () => {
             try {
-                // Fetch the HTML page via allorigins.win (more reliable for production)
-                const response = await fetch(
-                    `https://api.allorigins.win/get?url=${encodeURIComponent(
-                        "https://tamamedia.com/verificateurs"
-                    )}`
-                );
-
-                if (!response.ok) throw new Error("Erreur réseau");
-
-                const data = await response.json();
-                const htmlString = data.contents;
-
-                if (!htmlString) throw new Error("Aucun contenu récupéré");
-
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(htmlString, "text/html");
-
-                // Try to find article containers
-                let items = Array.from(doc.querySelectorAll("article"));
-
-                // Fallback: look for divs that contain an H2 or H3 and an IMG
-                if (items.length === 0) {
-                    const candidates = Array.from(doc.querySelectorAll("div"));
-                    items = candidates.filter(div => {
-                        const hasTitle = div.querySelector("h2, h3, h4");
-                        const hasImg = div.querySelector("img");
-                        const hasLink = div.querySelector("a");
-                        return hasTitle && hasImg && hasLink && (div.textContent?.length || 0) > 50;
-                    }).slice(0, 20);
+                const rssPosts = await fetchRssPosts();
+                if (!cancelled) {
+                    setPosts(rssPosts);
+                    setLoading(false);
                 }
-
-                // Parse articles
-                const articles: BlogPost[] = [];
-                const seenTitles = new Set();
-
-                items.forEach((item, index) => {
-                    // Title
-                    const titleElement = item.querySelector("h1, h2, h3, h4, .title");
-                    const title = titleElement?.textContent?.trim() || "";
-                    if (!title || seenTitles.has(title)) return;
-                    seenTitles.add(title);
-
-                    // Link
-                    let link = "#";
-                    const anchor = item.querySelector("a");
-                    if (anchor && anchor.href) {
-                        const href = anchor.getAttribute("href");
-                        if (href) {
-                            if (href.startsWith("http")) link = href;
-                            else link = `https://tamamedia.com${href.startsWith("/") ? "" : "/"}${href}`;
-                        }
-                    }
-
-                    // Exclude RSS feeds/XML links
-                    const lowercaseLink = link.toLowerCase();
-                    if (
-                        lowercaseLink.includes("/feed") ||
-                        lowercaseLink.includes("rss") ||
-                        lowercaseLink.includes("xml") ||
-                        lowercaseLink.includes("/rss") ||
-                        lowercaseLink.includes("?feed=")
-                    ) {
-                        return;
-                    }
-
-                    // Image
-                    const img = item.querySelector("img");
-                    let image = "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&h=500&fit=crop";
-                    if (img) {
-                        const src = img.getAttribute("src") || img.getAttribute("data-src");
-                        if (src) {
-                            if (src.startsWith("http")) image = src;
-                            else image = `https://tamamedia.com${src.startsWith("/") ? "" : "/"}${src}`;
-                        }
-                    }
-
-                    // Excerpt
-                    const paragraphs = item.querySelectorAll("p");
-                    let excerpt = "";
-                    for (const p of paragraphs) {
-                        const text = p.textContent?.trim();
-                        if (text && text.length > 20) {
-                            excerpt = text.slice(0, 160) + "...";
-                            break;
-                        }
-                    }
-                    if (!excerpt) {
-                        const allText = item.textContent?.trim() || "";
-                        excerpt = allText.replace(title, "").slice(0, 100) + "...";
-                    }
-
-                    // Date & Category
-                    const date = "Récent";
-                    const category = "Fact-checking";
-                    const author = "Les Vérificateurs";
-
-                    articles.push({
-                        id: `scraped-${index}`,
-                        title,
-                        excerpt,
-                        date,
-                        author,
-                        category,
-                        image,
-                        link
-                    });
-                });
-
-                if (articles.length === 0) throw new Error("Aucun article trouvé");
-
-                setPosts(articles);
-                setLoading(false);
             } catch (err) {
-                console.error("Scraping Fetch Error:", err);
-                setPosts(fallbackPosts);
-                setError(null); // Don't show error, just use fallback
-                setLoading(false);
+                console.error("RSS Feed Error:", err);
+                if (!cancelled) {
+                    // Silently fall back to static posts
+                    setPosts(fallbackPosts);
+                    setError(null);
+                    setLoading(false);
+                }
             }
         };
 
-        fetchPosts();
+        load();
+
+        return () => { cancelled = true; };
     }, []);
 
     return { posts, loading, error };
