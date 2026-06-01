@@ -116,6 +116,18 @@ export const useBlogPosts = () => {
                         }
                     }
 
+                    // Exclude RSS feeds/XML links
+                    const lowercaseLink = link.toLowerCase();
+                    if (
+                        lowercaseLink.includes("/feed") ||
+                        lowercaseLink.includes("rss") ||
+                        lowercaseLink.includes("xml") ||
+                        lowercaseLink.includes("/rss") ||
+                        lowercaseLink.includes("?feed=")
+                    ) {
+                        return;
+                    }
+
                     // Image
                     const img = item.querySelector("img");
                     let image = "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&h=500&fit=crop";
