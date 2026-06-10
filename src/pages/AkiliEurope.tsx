@@ -1,9 +1,12 @@
 import { motion, useInView, useMotionValue, useSpring } from "framer-motion";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import akiliLogo from "@/assets/akili-logo.png";
 import Footer from "@/components/Footer";
+import { FaWhatsapp } from "react-icons/fa";
+import { Download, Apple, PlayCircle, Monitor } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
@@ -14,13 +17,6 @@ const fadeUp = (delay = 0) => ({
 
 /* ── Navbar Europe ───────────────────────────────────────────── */
 const EuropeNav = () => {
-  const [submitted, setSubmitted] = useState(false);
-  const [email, setEmail] = useState("");
-
-  const handleNotify = () => {
-    if (email) setSubmitted(true);
-  };
-
   return (
     <motion.nav
       initial={{ y: -100 }}
@@ -51,12 +47,14 @@ const EuropeNav = () => {
             Akili Check Afrique →
           </Link>
 
-          {/* Être notifié button */}
+          {/* Vérifier button */}
           <a
-            href="#notify"
+            href="https://ai.akilicheck.com"
+            target="_blank"
+            rel="noopener noreferrer"
             className="border border-foreground text-foreground text-sm font-medium px-4 py-2 rounded-full hover:bg-foreground hover:text-background transition-colors whitespace-nowrap"
           >
-            Être notifié
+            Vérifier une info
           </a>
         </div>
       </div>
@@ -66,14 +64,6 @@ const EuropeNav = () => {
 
 /* ── Hero ────────────────────────────────────────────────────── */
 const EuropeHero = () => {
-  const [email, setEmail] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email) setSubmitted(true);
-  };
-
   const langs = [
     { flag: "🇫🇷", name: "Français" },
     { flag: "🇬🇧", name: "English" },
@@ -119,27 +109,28 @@ const EuropeHero = () => {
           Avant de relayer une information, Akili Check Europe vous aide à vérifier ce qui est vrai, trompeur ou faux — en quelques secondes, dans votre langue.
         </motion.p>
 
-        {/* Email inline */}
-        <motion.form {...fadeUp(0.4)} onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8 max-w-md mx-auto">
-          <input
-            type="email"
-            placeholder="Votre adresse e-mail"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="flex-1 px-5 py-3 rounded-full border border-border focus:outline-none focus:ring-2 focus:ring-primary bg-white text-foreground placeholder:text-muted-foreground"
-            required
-          />
-          {submitted ? (
-            <span className="rounded-full bg-green-600 text-white font-semibold px-8 py-3 text-sm flex items-center justify-center shadow-md">✓ Inscrit !</span>
-          ) : (
-            <button type="submit" className="rounded-full bg-primary text-primary-foreground font-semibold px-8 py-3 text-sm hover:bg-primary/90 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 whitespace-nowrap">
-              M'avertir du lancement
-            </button>
-          )}
-        </motion.form>
+        {/* Action buttons */}
+        <motion.div {...fadeUp(0.4)} className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8 max-w-lg mx-auto">
+          <Button variant="hero" size="xl" className="w-full sm:w-auto" asChild>
+            <a href="https://ai.akilicheck.com" target="_blank" rel="noopener noreferrer">
+              Vérifier sur le web
+            </a>
+          </Button>
+          <Button variant="outline" size="xl" className="w-full sm:w-auto bg-[#25D366] hover:bg-[#20bd5a] text-white border-none" asChild>
+            <a href="https://wa.me/33762197480" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 justify-center">
+              <FaWhatsapp className="w-5 h-5" />
+              Vérifier sur WhatsApp
+            </a>
+          </Button>
+          <Button variant="outline" size="xl" className="w-full sm:w-auto" asChild>
+            <a href="#download">
+              Télécharger l'app
+            </a>
+          </Button>
+        </motion.div>
 
         {/* Language chips */}
-        <motion.div {...fadeUp(0.5)} className="flex flex-wrap gap-2 justify-center mb-8">
+        <motion.div {...fadeUp(0.5)} className="flex flex-wrap gap-2 justify-center">
           {langs.map((l) => (
             <span
               key={l.name}
@@ -148,16 +139,6 @@ const EuropeHero = () => {
               {l.flag} {l.name}
             </span>
           ))}
-        </motion.div>
-
-        {/* Secondary CTA */}
-        <motion.div {...fadeUp(0.6)}>
-          <Link
-            to="/"
-            className="inline-flex items-center px-8 py-4 rounded-full border-2 border-foreground text-foreground font-semibold text-sm hover:bg-foreground hover:text-background transition-colors"
-          >
-            Utiliser Akili Check Afrique en attendant →
-          </Link>
         </motion.div>
       </div>
     </section>
@@ -228,18 +209,19 @@ const AboutSection = () => (
           <strong>Akili est une initiative de Tama Media</strong>, média panafricain animé par un collectif de journalistes de la diaspora africaine en France et de journalistes locaux africains, qui produit des reportages au long format, des enquêtes et du fact-checking.
         </p>
         <p>
-          Akili Check est d'abord né de la volonté de lutter contre la désinformation en Afrique. Face à la nécessité croissante de mener ce même combat en Europe,{" "}
-          <strong>Akili Check Europe est désormais en cours de développement</strong>. En attendant son lancement, vous pouvez dès aujourd'hui utiliser{" "}
-          <strong>Akili Check Afrique</strong>.
+          Akili Check est né de la volonté de lutter contre la désinformation en Afrique, et s'étend désormais à l'Europe.{" "}
+          <strong>Akili Check Europe est maintenant disponible</strong> pour vous aider à débusquer les infox au quotidien, directement depuis vos canaux préférés.
         </p>
       </motion.div>
       <motion.div {...fadeUp(0.2)} className="mt-10">
-        <Link
-          to="/"
+        <a
+          href="https://ai.akilicheck.com"
+          target="_blank"
+          rel="noopener noreferrer"
           className="inline-flex items-center px-8 py-4 rounded-full bg-[#E8590C] text-white font-semibold hover:bg-[#d14e0b] transition-colors"
         >
-          Utiliser Akili Check Afrique →
-        </Link>
+          Vérifier une information →
+        </a>
       </motion.div>
     </div>
   </section>
@@ -413,44 +395,138 @@ const VerdictsSection = () => {
   );
 };
 
-/* ── Notification section ────────────────────────────────────── */
-const NotifySection = () => {
-  const [email, setEmail] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email) setSubmitted(true);
-  };
-
+/* ── Download / CTA section ──────────────────────────────────── */
+const DownloadSection = () => {
   return (
-    <section id="notify" className="bg-primary py-20">
-      <div className="container mx-auto px-4 lg:px-8 max-w-xl text-center">
-        <motion.h2 {...fadeUp(0)} className="font-display text-2xl md:text-3xl font-bold text-white mb-3">
-          Akili Check Europe — bientôt disponible
-        </motion.h2>
-        <motion.p {...fadeUp(0.1)} className="text-white/80 mb-8">
-          Soyez parmi les premiers à tester Akili Check Europe dès son lancement.
-        </motion.p>
-        <motion.form {...fadeUp(0.2)} onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 sm:gap-4 max-w-md mx-auto">
-          <input
-            type="email"
-            placeholder="Votre adresse e-mail"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="flex-1 px-5 py-3 rounded-full border-none focus:outline-none focus:ring-2 focus:ring-white/50 bg-white text-foreground placeholder:text-muted-foreground shadow-inner"
-            required
+    <section id="download" className="py-24 relative overflow-hidden bg-navy text-white">
+      {/* Background blobs */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-blob" />
+        <div className="absolute bottom-0 right-1/4 w-72 h-72 bg-gold/20 rounded-full blur-3xl animate-blob-delayed" />
+      </div>
+
+      <div className="container mx-auto px-4 lg:px-8 relative z-10 text-center max-w-4xl">
+        <motion.div
+          {...fadeUp(0)}
+          className="mb-8"
+        >
+          <motion.img
+            src={akiliLogo}
+            alt="Akili"
+            className="w-20 h-20 mx-auto"
+            animate={{ rotate: [0, 10, -10, 0] }}
+            transition={{
+              repeat: Infinity,
+              duration: 5,
+              ease: "easeInOut",
+            }}
           />
-          {submitted ? (
-            <span className="rounded-full bg-green-500 text-white font-semibold px-8 py-3 text-sm flex items-center justify-center shadow-md">
-              ✓ Inscrit !
-            </span>
-          ) : (
-            <button type="submit" className="rounded-full bg-[#E8590C] text-white font-semibold px-8 py-3 text-sm hover:bg-[#d14e0b] shadow-md hover:shadow-lg transition-all hover:-translate-y-0.5 whitespace-nowrap">
-              M'avertir du lancement
-            </button>
-          )}
-        </motion.form>
+        </motion.div>
+
+        <motion.h2
+          {...fadeUp(0.1)}
+          className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4"
+        >
+          Commencez à vérifier vos informations dès aujourd'hui
+        </motion.h2>
+
+        <motion.p
+          {...fadeUp(0.2)}
+          className="text-white/80 text-lg mb-10 max-w-2xl mx-auto"
+        >
+          Choisissez le canal qui vous convient le mieux : notre application mobile gratuite, notre bot WhatsApp ou l'interface web dédiée.
+        </motion.p>
+
+        {/* Action Options Grid */}
+        <div className="grid md:grid-cols-3 gap-6 max-w-3xl mx-auto mb-12 text-foreground">
+          {/* Web App Option */}
+          <motion.div
+            {...fadeUp(0.3)}
+            className="flex flex-col justify-between p-6 bg-white/5 backdrop-blur-md rounded-3xl border border-white/10 text-left hover:border-white/20 transition-all text-white"
+          >
+            <div>
+              <div className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center mb-4">
+                <Monitor className="w-6 h-6 text-white" />
+              </div>
+              <h3 className="font-bold text-xl mb-2 text-white">Akili sur le Web</h3>
+              <p className="text-white/70 text-sm mb-6">
+                Vérifiez n'importe quel texte ou lien directement depuis votre navigateur.
+              </p>
+            </div>
+            <Button variant="outline" className="w-full text-white border-white/20 hover:bg-white hover:text-navy transition-colors" asChild>
+              <a href="https://ai.akilicheck.com" target="_blank" rel="noopener noreferrer">
+                Vérifier en ligne
+              </a>
+            </Button>
+          </motion.div>
+
+          {/* WhatsApp Option */}
+          <motion.div
+            {...fadeUp(0.4)}
+            className="flex flex-col justify-between p-6 bg-white/5 backdrop-blur-md rounded-3xl border border-white/10 text-left hover:border-white/20 transition-all text-white"
+          >
+            <div>
+              <div className="w-12 h-12 rounded-2xl bg-[#25D366]/20 flex items-center justify-center mb-4">
+                <FaWhatsapp className="w-6 h-6 text-[#25D366]" />
+              </div>
+              <h3 className="font-bold text-xl mb-2 text-white">Akili sur WhatsApp</h3>
+              <p className="text-white/70 text-sm mb-6">
+                Envoyez simplement vos images, textes ou rumeurs à notre chatbot WhatsApp.
+              </p>
+            </div>
+            <Button className="w-full bg-[#25D366] hover:bg-[#20bd5a] text-white border-none transition-colors" asChild>
+              <a href="https://wa.me/33762197480" target="_blank" rel="noopener noreferrer">
+                Ouvrir WhatsApp
+              </a>
+            </Button>
+          </motion.div>
+
+          {/* Mobile App Option */}
+          <motion.div
+            {...fadeUp(0.5)}
+            className="flex flex-col justify-between p-6 bg-white/5 backdrop-blur-md rounded-3xl border border-white/10 text-left hover:border-white/20 transition-all text-white"
+          >
+            <div>
+              <div className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center mb-4">
+                <Download className="w-6 h-6 text-white" />
+              </div>
+              <h3 className="font-bold text-xl mb-2 text-white">Application mobile</h3>
+              <p className="text-white/70 text-sm mb-6">
+                Profitez d'une expérience optimisée avec des alertes et l'historique complet.
+              </p>
+            </div>
+            <div className="flex flex-col gap-2">
+              <a
+                href="https://apps.apple.com/fr/app/akili/id6738965572"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 py-2 px-3 bg-white text-navy font-bold text-xs rounded-xl hover:bg-white/90 transition-colors"
+              >
+                <Apple className="w-4 h-4 shrink-0" /> App Store
+              </a>
+              <a
+                href="https://play.google.com/store/apps/details?id=com.litekev.akili&pcampaignid=web_share"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 py-2 px-3 bg-white/10 text-white font-bold text-xs rounded-xl border border-white/20 hover:bg-white/25 transition-colors"
+              >
+                <PlayCircle className="w-4 h-4 shrink-0" /> Google Play
+              </a>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Badges footer */}
+        <motion.div
+          {...fadeUp(0.6)}
+          className="flex items-center justify-center gap-6 text-white/50 text-sm"
+        >
+          <span>Gratuit</span>
+          <span className="w-1 h-1 rounded-full bg-white/30" />
+          <span>Sans publicité</span>
+          <span className="w-1 h-1 rounded-full bg-white/30" />
+          <span>100% sécurisé</span>
+        </motion.div>
       </div>
     </section>
   );
@@ -460,8 +536,8 @@ const NotifySection = () => {
 const AkiliEurope = () => (
   <>
     <Helmet>
-      <title>Akili Check Europe | Bientôt disponible</title>
-      <meta name="description" content="Akili Check Europe est en cours de développement. Inscrivez-vous pour être notifié dès le lancement." />
+      <title>Akili Check Europe | Vérification d'information en temps réel</title>
+      <meta name="description" content="Akili Check Europe est désormais disponible. Vérifiez vos informations sur le web, WhatsApp ou via notre application mobile." />
       <link rel="canonical" href="https://akilicheck.com/europe" />
     </Helmet>
     <div className="min-h-screen bg-background overflow-x-hidden">
@@ -473,7 +549,7 @@ const AkiliEurope = () => (
         <CanVerifySection />
         <HowItWorksSection />
         <VerdictsSection />
-        <NotifySection />
+        <DownloadSection />
       </main>
       <Footer />
     </div>
