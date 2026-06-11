@@ -11,11 +11,8 @@ export interface BlogPost {
     link: string;
 }
 
-// Tama Media RSS feed URL
-const TAMA_MEDIA_RSS = "https://tamamedia.com/api/rss";
-
-// CORS proxy to bypass browser restrictions
-const CORS_PROXY = "https://api.allorigins.win/raw?url=";
+// Tama Media RSS feed URL (proxied via Vite/Netlify/Vercel)
+const TAMA_MEDIA_RSS = "/api/rss";
 
 // Fallback posts if RSS feed is unavailable
 const fallbackPosts: BlogPost[] = [
@@ -81,7 +78,7 @@ const formatDate = (pubDate: string): string => {
  * Fetch and parse the Tama Media RSS feed, returning BlogPost objects.
  */
 const fetchRssPosts = async (): Promise<BlogPost[]> => {
-    const fetchUrl = `${CORS_PROXY}${encodeURIComponent(TAMA_MEDIA_RSS)}`;
+    const fetchUrl = TAMA_MEDIA_RSS;
 
     const response = await fetch(fetchUrl);
     if (!response.ok) {
@@ -109,12 +106,16 @@ const fetchRssPosts = async (): Promise<BlogPost[]> => {
         throw new Error("Aucun article trouvé dans le flux RSS.");
     }
 
-    return items.map((item, index) => {
+    const allPosts = items.map((item, index) => {
         const title = item.querySelector("title")?.textContent?.trim() || "";
         const link = item.querySelector("link")?.textContent?.trim() || "https://tamamedia.com/category/les-verificateurs/";
         const description = item.querySelector("description")?.textContent || "";
         const pubDate = item.querySelector("pubDate")?.textContent || "";
-        const category = item.querySelector("category")?.textContent?.trim() || "Fact-checking";
+
+        // Extract all categories to ensure we don't miss any
+        const categoryNodes = Array.from(item.querySelectorAll("category"));
+        const categories = categoryNodes.map(node => node.textContent?.trim() || "");
+        const mainCategory = categories.length > 0 ? categories[0] : "Fact-checking";
 
         // Clean description from HTML tags for excerpt
         const excerpt = description.replace(/<[^>]*>/g, "").trim().slice(0, 180) + "...";
@@ -122,11 +123,13 @@ const fetchRssPosts = async (): Promise<BlogPost[]> => {
         // Try to extract image from various RSS fields
         let image = "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&h=500&fit=crop";
 
+        const resolveUrl = (url: string) => url.startsWith("http") ? url : `https://tamamedia.com${url.startsWith('/') ? '' : '/'}${url}`;
+
         // 1. media:content or media:thumbnail
         const mediaContent = item.querySelector("content, thumbnail");
         if (mediaContent) {
             const url = mediaContent.getAttribute("url");
-            if (url) image = url;
+            if (url) image = resolveUrl(url);
         }
 
         // 2. enclosure (image attachment)
@@ -134,14 +137,14 @@ const fetchRssPosts = async (): Promise<BlogPost[]> => {
             const enclosure = item.querySelector("enclosure");
             if (enclosure && enclosure.getAttribute("type")?.startsWith("image/")) {
                 const url = enclosure.getAttribute("url");
-                if (url) image = url;
+                if (url) image = resolveUrl(url);
             }
         }
 
         // 3. <img> inside description HTML
         if (image.includes("unsplash") && description) {
             const imgMatch = description.match(/<img[^>]+src="([^">]+)"/);
-            if (imgMatch) image = imgMatch[1];
+            if (imgMatch) image = resolveUrl(imgMatch[1]);
         }
 
         return {
@@ -150,11 +153,35 @@ const fetchRssPosts = async (): Promise<BlogPost[]> => {
             excerpt,
             date: formatDate(pubDate),
             author: "Les Vérificateurs",
-            category,
+            category: mainCategory,
             image,
             link,
+            _rawCategories: categories
         };
     });
+
+    // Filter to only include "Les vérificateurs" articles
+    const verificateursPosts = allPosts.filter(post => {
+        const isVerificateursCategory = post._rawCategories.some(cat => {
+            const normalized = cat.toLowerCase().replace(/[-_ ]/g, "");
+            return normalized.includes("lesverificateurs") ||
+                normalized.includes("lesvérificateurs");
+        });
+
+        const isVerificateursLink = post.link.toLowerCase().includes("les-verificateurs");
+
+        return isVerificateursCategory || isVerificateursLink;
+    });
+
+    if (verificateursPosts.length === 0) {
+        throw new Error("Aucun article 'Les vérificateurs' trouvé dans le flux RSS.");
+    }
+
+    // Remove the temporary _rawCategories field before returning
+    return verificateursPosts.map(({ _rawCategories, ...post }) => ({
+        ...post,
+        category: "Les Vérificateurs" // Force a consistent category name
+    })) as BlogPost[];
 };
 
 export const useBlogPosts = () => {

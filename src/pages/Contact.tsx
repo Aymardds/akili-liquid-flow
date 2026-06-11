@@ -41,6 +41,7 @@ const Contact = () => {
                     from_email: formData.email,
                     message: formData.message,
                     to_name: "Rédaction Akili",
+                    to_email: "redaction@tamamedia.com",
                 },
                 publicKey
             );
@@ -149,6 +150,7 @@ const Contact = () => {
                                             href="https://www.facebook.com/profile.php?id=61576184382062"
                                             target="_blank"
                                             rel="noopener noreferrer"
+                                            aria-label="Facebook Akili"
                                             className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors"
                                         >
                                             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -159,6 +161,7 @@ const Contact = () => {
                                             href="https://www.instagram.com/akilicheck?igsh=M2V0OXZ3eTFmaDcw"
                                             target="_blank"
                                             rel="noopener noreferrer"
+                                            aria-label="Instagram Akili"
                                             className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors"
                                         >
                                             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -169,6 +172,7 @@ const Contact = () => {
                                             href="https://tinyurl.com/43rjerde"
                                             target="_blank"
                                             rel="noopener noreferrer"
+                                            aria-label="WhatsApp Akili"
                                             className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors"
                                         >
                                             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
