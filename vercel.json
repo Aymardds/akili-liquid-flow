@@ -13,6 +13,10 @@
       "destination": "/robots.txt"
     },
     {
+      "source": "/og-preview.jpg",
+      "destination": "/og-preview.jpg"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
